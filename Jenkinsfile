@@ -1,23 +1,17 @@
 pipeline {
 agent any
+environment {
+NEW_VERSION = '1.0.0'
+ADMIN_CREDENTIALS = credentials('admin_user_credentials')
+}
 stages {
 stage("build") {
-when {
-expression {
-env.GIT_BRANCH == 'origin/main'
-}
-}
 steps {
 echo 'building the applicaiton...'
+echo "building version ${NEW_VERSION}"
 }
 }
 stage("test") {
-when {
-expression {
-env.GIT_BRANCH == 'origin/test' || env.GIT_BRANCH == ''
-}
-}
-Jenkins CI Pipeline 생성 실습 5
 steps {
 echo 'testing the applicaiton...'
 }
@@ -25,6 +19,8 @@ echo 'testing the applicaiton...'
 stage("deploy") {
 steps {
 echo 'deploying the applicaiton...'
+echo "deploying with ${ADMIN_CREDENTIALS}"
+sh 'printf ${ADMIN_CREDENTIALS}'
 }
 }
 }
