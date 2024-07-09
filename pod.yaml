@@ -13,9 +13,7 @@ spec:
     - name: flask
 
       image: skawjdgns12/flaskapp:v1.0.0
-
-      ports:
-
-        - containerPort: 5000
-
-
+    ports:
+    - containerPort: 5000
+  imagePullSecrets:
+  - name: myregistrykey
